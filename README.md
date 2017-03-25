@@ -10,7 +10,7 @@ Pour jouer, l'utilisateur a le choix entre entre rejoindre le matchmaking ou aff
 # Requirements
 * nodejs
 * nodemon
-FrisbeeDashJs:
+## FrisbeeDashJs:
 * express
 * socket.io
 * socketio-jwt
@@ -24,7 +24,7 @@ FrisbeeDashJs:
 ```bash
 npm install --save express socket.io body-parser helmet socketio-jwt box-collide shortid mongoose request
 ```
-Serveur authentifaication
+## Serveur authentifaication
 * express
 * body-parser
 * morgan
