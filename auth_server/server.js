@@ -129,23 +129,10 @@ apiRoutes.post('/login', function (req, res) {
             } else {
                 var token = jwt.sign({name: req.body.username, temporary: true}, app.get('superSecret'), {expiresIn: "1h"});
                 // create a sample user
-                /*var nick = new User({
-                    name: req.body.username,
-                    password: shortid.generate(),
-                    mail: shortid.generate(),
-                    temporary: true,
-                    token: token
-                });
-
-                // save the sample user
-                var promise = nick.save();
-                promise.then(function (user) {*/
-                    // console.log('Temporary user ' + user.name + ' saved successfully');
                     res.json({
                         success: true,
                         token: token
                     });
-                // });
             }
         }).catch(function (error) {
             console.log('error registering temp user:', error);
@@ -198,17 +185,16 @@ apiRoutes.use(function (req, res, next) {
         var token = req.body.token || req.query.token || req.headers['x-access-token'];
         if (token) {
             // verifies secret and checks exp
-            // console.log('token ok : '+token);
             try {
                 req.decoded = jwt.verify(token, app.get('superSecret'));
-                // console.log(req.decoded.name);
                 // if everythng is good, save to request for use in other routes
                 var promise = User.findOne({name: req.decoded.name}).exec();
-                // console.log(promise);
                 promise.then(function (user) {
                     if (!user)
                         res.json({success: false, msg: "User didn't found"});
                     else {
+                        console.log(user)
+                        console.log("user.admin: " + user.admin)
                         if (user.admin)
                             req.admin = true;
 
@@ -423,7 +409,7 @@ apiRoutes.get('/points/:username', function (req, res) {
     });
 });
 
-app.post('/points', function (req, res) {
+apiRoutes.post('/points', function (req, res) {
     if (typeof(req.admin) != 'undefined' && req.admin) {
     // TODO: check if points is under 0
         var to_inc = -1;
@@ -442,6 +428,9 @@ app.post('/points', function (req, res) {
         }).catch(function(error) {
             console.log('Error:', error);
         });
+    } else {
+        console.log('typeof(req.admin): ' + typeof(req.admin))
+        console.log(req.admin)
     }
 });
 

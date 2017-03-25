@@ -1,10 +1,8 @@
 "use strict";
-var fs = require('fs');
 var util = require('util');
-var express = require('express');
 var path = require('path');
+var express = require('express');
 var helmet = require('helmet');
-var session = require('express-session');
 var request = require('request');
 var shortid = require('shortid');
 
@@ -42,10 +40,13 @@ function init() {
                 console.log("Can't change user status");
             } else {
                 body = JSON.parse(body);
-                if (body.success)
+                if (body.success) {
                     token = body.token;
+                }
             }
-        });
+        }
+    );
+
     setEventHandlers();
 }
 
@@ -62,8 +63,7 @@ function setEventHandlers() {
 }
 function onSocketConnection(client) {
     util.log('client id: ' + client.id);
-    console.log('decoded_token');
-    console.log(client.decoded_token.name, 'connected');
+    util.log(client.decoded_token.name + ' connected');
     client.on('disconnect', onClientDisconnect);
     client.on('new player', onNewPlayer);
     client.on('move player', onMovePlayer);
@@ -88,7 +88,8 @@ function onSocketConnection(client) {
             if (err) {
                 console.log("Can't change user status");
             }
-        });
+        }
+    );
 
     client.pseudo = client.decoded_token.name;
     client.playing = false;

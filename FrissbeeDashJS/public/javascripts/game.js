@@ -77,6 +77,9 @@ let field_border_right = 0;
 let field_marge_top = 0;
 let field_border_bot = 0;
 
+let game_server = "localhost";
+let auth_server = "localhost";
+
 /**
  * @brief valeurs actualisées lors du resizing
  */
@@ -147,7 +150,7 @@ game = new Phaser.Game(properties.width, properties.height, Phaser.AUTO, '', {
 });
 
 function preload() {
-    game.load.baseURL = 'http://localhost:8080/assets/';
+    game.load.baseURL = "http://" + game_server + ":8080/assets/";
     game.load.crossOrigin = 'anonymous';
 
     game.load.image('field', 'field.png');
@@ -494,7 +497,7 @@ function update() {
         }
 
         for (let i = 0; i < remotePlayers.length; i++) {
-            if (i % 2 == 0) {
+            if ((i % 2) == 0) {
                 // console.log(remotePlayers[i].powerGauge);
                 if (remotePlayers[i].powerGauge >= 99) {
                     pbleft_full.visible = true;
@@ -1038,6 +1041,9 @@ function onSocketConnected() {
         })
         .on('unauthorized', function(msg) {
             console.log("unauthorized: " + JSON.stringify(msg.data));
+            $('#modal-content').modal({
+                show: true
+            });
         });
 }
 function onDash(player_id) {
@@ -1049,7 +1055,7 @@ function logout() {
     if (gameStarted) {
         socket.emit('concede');
     }
-    $.post('http://localhost:8081/api/logout',
+    $.post("http://" + auth_server + ":8081/api/logout",
         {
             token: token
         },
@@ -1076,7 +1082,7 @@ function showMenu() {
 }
 function delAccount() {
     $.ajax({
-        url: 'http://localhost:8081/api/signout' + '?' + $.param({'token': token}),
+        url: "http://" + auth_server + ":8081/api/signout?" + $.param({'token': token}),
         type: 'DELETE',
         crossDomain: true,
         success: function (data) {

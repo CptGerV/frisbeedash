@@ -1,7 +1,6 @@
 "use strict";
 // useful variables
 let token = '';
-let temp_account = false;
 
 // onload hidden function
 function onJSLoad() {
@@ -32,7 +31,7 @@ function onJSLoad() {
         let request_name = $('#requestname_friend');
         if (request_name.val().length > 0) {
             $.post(
-                'http://localhost:8081/api/friend/request',
+                'http://' + auth_server + ':8081/api/friend/request',
                 {
                     token: token,
                     requestname: request_name.val()
@@ -92,7 +91,7 @@ function connect() {
     //get the password value and send to server (null password is tested on server)
     let password = $("#passwd").val();
     $.post(
-        'http://localhost:8081/api/login',
+        'http://' + auth_server + ':8081/api/login',
         {
             username: pseudo,
             password: password
@@ -117,7 +116,7 @@ function refreshFriendlist() {
     }, 10000);
 }
 function connectToServer() {
-    socket = io('http://localhost:8080', {transports: ['websocket']});
+    socket = io('http://'+ game_server + ':8080', {transports: ['websocket']});
     setEventHandlers();
 }
 //called when click on cancel
@@ -240,7 +239,7 @@ function subscribe() {
 
     } else {
         $.post(
-            'http://localhost:8081/api/signup',
+            'http://' + auth_server + ':8081/api/signup',
             {
                 username: pseudo,
                 password: password,
@@ -279,7 +278,7 @@ $(document).off("keyup").keyup(function (e) {
 function get_friend_list() {
     let friendlist = [];
     $.post(
-        'http://localhost:8081/api/friend/list',
+        'http://' + auth_server + ':8081/api/friend/list',
         {
             token: token
         },
@@ -317,7 +316,7 @@ function get_friend_list() {
                             input_group_btn.append("<button type=\"button\" class=\"btn btn-default glyphicon glyphicon glyphicon-ok\" id='" + friend.name + "'></button>")
                                 .click(function () {
                                     $.post(
-                                        'http://localhost:8081/api/friend/accept',
+                                        'http://' + auth_server + ':8081/api/friend/accept',
                                         {
                                             token: token,
                                             requestname: event.target.id
@@ -335,7 +334,7 @@ function get_friend_list() {
                             input_group_btn.append("<button type=\"button\" class=\"btn btn-default glyphicon glyphicon glyphicon-remove warning\" id='" + friend.name + "'></button>")
                                 .click(function () {
                                     $.post(
-                                        'http://localhost:8081/api/friend/refuse',
+                                        'http://' + auth_server + ':8081/api/friend/refuse',
                                         {
                                             token: token,
                                             requestname: event.target.id
@@ -370,7 +369,7 @@ function get_friend_list() {
                                 .appendTo(input_group_btn)
                                 .click(function () {
                                     $.post(
-                                        'http://localhost:8081/api/friend/remove',
+                                        'http://' + auth_server + ':8081/api/friend/remove',
                                         {
                                             token: token,
                                             requestname: event.target.id
@@ -414,7 +413,7 @@ function get_friend_list() {
 // Change password
 function update_password(new_password) {
     $.ajax({
-        url: 'http://localhost:8081/api/change_password',
+        url: 'http://' + auth_server + ':8081/api/change_password',
         type: 'PUT',
         data: {
             token: token,
