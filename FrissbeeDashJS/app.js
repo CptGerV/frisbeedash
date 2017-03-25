@@ -5,6 +5,7 @@ var express = require('express');
 var helmet = require('helmet');
 var request = require('request');
 var shortid = require('shortid');
+var socketIoJwt = require('socketio-jwt');
 
 var Player = require('./Player.js');
 var Room = require('./Room.js');
@@ -22,14 +23,14 @@ server.listen(8080);
 app.use(express.static('public'));
 app.use(helmet());
 
-var socketIoJwt = require('socketio-jwt');
+var auth_server = "localhost";
 
 function init() {
     util.log('Start server');
     // Connection to authentication server as admin
     request.post(
         {
-            url: 'http://localhost:8081/api/login', // localhost doesn't work
+            url: 'http://' + auth_server + ':8081/api/login',
             form: {
                 username: 'admin',
                 password: 'adminadmin',
@@ -78,7 +79,7 @@ function onSocketConnection(client) {
     sockets.push(client);
     request.post(
         {
-            url: 'http://localhost:8081/connect', // localhost doesn't work
+            url: 'http://' + auth_server + ':8081/connect',
             form: {
                 name: client.decoded_token.name,
                 online: true,
@@ -137,7 +138,7 @@ function onClientDisconnect() {
 
     request.post(
         {
-            url: 'http://localhost:8081/connect', // localhost doesn't work
+            url: 'http://' + auth_server + ':8081/connect',
             form: {
                 name: this.decoded_token.name,
                 online: false,

@@ -458,7 +458,7 @@ Room.prototype.endGame = function (player_id) {
             victory = true;
         }
         request.post({
-                url:'http://localhost:8081/api/points', // localhost doesn't work
+                url:'http://' + auth_server + ':8081/api/points',
                 form: {
                     name: socket.pseudo,
                     victory: victory,

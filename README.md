@@ -59,7 +59,7 @@ Les serveurs sont configurés pour fonctionner en local.
 Pour changer l'adresse IP:
 ```bash
 sed -i "s@auth_server = "localhost@auth_server = "ip_du_serveur_authentification@g" FrisbeeDashJS/app.js FrisbeeDashJS/Room.js FrisbeeDashJS/javascripts/game.js
-sed -i "s@game_server = "localhost@game_server = "ip_du_serveur_de_jeu@g" FrisbeeDashJS/javascripts/game.js FrisbeeDashJS/javascripts/game_helper.js
+sed -i "s@game_server = "localhost@game_server = "ip_du_serveur_de_jeu@g" FrisbeeDashJS/javascripts/game.js
 ```
 
 # Contributing
