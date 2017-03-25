@@ -1,0 +1,163 @@
+<!doctype html>
+<html xmlns:data-backdrop="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Frisbee Dash</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+
+</head>
+    <body>
+    <ul class="list-group" id="friends_list">
+        <a href="#" class="list-group-item active text-center" id="panel_friends_list" style="width: 280px;">Friends</a>
+        <div class="input-group user_box" id="add-friend-box">
+            <input type="text" class="form-control" aria-label="..." id="requestname_friend">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" id="btn-add-friend">Add friend</button>
+            </div>
+        </div>
+    </ul>
+
+    <div class="container">
+        <div class="row chat-window col-xs-5 col-md-3" id="chat_window_1" style="margin-left:10px;display: none;">
+            <div class="col-xs-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading top-bar">
+                        <div class="col-md-8 col-xs-8">
+                            <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span></h3>
+                        </div>
+                        <div class="col-md-4 col-xs-4" style="text-align: right;">
+                            <a href="#" id="close_chat_window"><span class="glyphicon glyphicon-remove icon_close" data-id="chat_window_1"></span></a>
+                        </div>
+                    </div>
+                    <div class="panel-body msg_container_base" id="container-msg">
+
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+                            <span class="input-group-btn">
+                        <button class="btn btn-primary btn-sm" id="btn-chat">Send</button>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-content" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Connection</h3>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <label>Choose your nickname</label>
+                        <input type="text" id="pseudo" maxlength="14" placeholder="Required"/>
+                    </p>
+                    <div id="hiddenps" style="color : red;font-size: small"></div>
+                    <p>
+                        <label>Password</label><br/>
+                        <input type="password" id="passwd" placeholder="Optional"/>
+                    </p>
+                    <div id="hiddenpw" style="color : red;font-size: small"></div>
+                    <p>
+                        <label id="pconf">Confirm password</label>
+                        <input type="password" id="passconfirm" placeholder="Password"/>
+                    </p>
+                    <div id="hiddenpwc" style="color : red;font-size: small"></div>
+                    <p>
+                        <label id="imail">Mail address</label><br/>
+                        <input type="email" id="mail" placeholder="email@example.com"/>
+                    </p>
+                    <div id="hiddenm" style="color : red;font-size: small"></div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" id="btn-connect" class="btn btn-primary" onclick="connect()">Connect</a>
+                    <a href="#" id="btn-subscribe" class="btn btn-primary" onclick="subscribeMode()">Subscribe</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="help_modal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-show="false">
+            <div class="modal-footer">
+                <img type="button" onclick="outOfHelp()" id="btn_ooh" src="assets/buttons/help-icon_2.png">
+                </img>
+            </div>
+    </div>
+
+    <!-- https://code.jquery.com/jquery-3.1.1.min.js -->
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+        var socket;
+    </script>
+    <script type='text/javascript' src="javascripts/requestAnimationFrame.js"></script>
+    <script type='text/javascript' src="javascripts/Player.js"></script>
+    <script type='text/javascript' src="javascripts/Disc.js"></script>
+    <script type="text/javascript" src="javascripts/phaser.min.js"></script>
+    <script type="text/javascript" src="javascripts/game.js"></script>
+    <script type="text/javascript" src="javascripts/game_helper.js"></script>
+    </body>
+</html>
+
+<!--
+                        <div class="row msg_container base_sent">
+                            <div class="col-md-10 col-xs-10">
+                                <div class="messages msg_sent">
+                                    <p>that mongodb thing looks good, huh?
+                                        tiny master db, and huge document store</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-xs-2 avatar">
+                                <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                            </div>
+                        </div>
+                        <div class="row msg_container base_receive">
+                            <div class="col-md-2 col-xs-2 avatar">
+                                <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                            </div>
+                            <div class="col-md-10 col-xs-10">
+                                <div class="messages msg_receive">
+                                    <p>that mongodb thing looks good, huh?
+                                        tiny master db, and huge document store</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row msg_container base_receive">
+                            <div class="col-md-2 col-xs-2 avatar">
+                                <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                            </div>
+                            <div class="col-xs-10 col-md-10">
+                                <div class="messages msg_receive">
+                                    <p>that mongodb thing looks good, huh?
+                                        tiny master db, and huge document store</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row msg_container base_sent">
+                            <div class="col-xs-10 col-md-10">
+                                <div class="messages msg_sent">
+                                    <p>that mongodb thing looks good, huh?
+                                        tiny master db, and huge document store</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-xs-2 avatar">
+                                <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                            </div>
+                        </div> -->
