@@ -9,7 +9,7 @@ Pour jouer, l'utilisateur a le choix entre entre rejoindre le matchmaking ou aff
 
 # Développement
 
-Le code front-end se trouve dans FrisbeeDashJS/public/, le code back-end est dans FrisbeeDashJS/*.js.
+Le code front-end se trouve dans `FrisbeeDashJS/public/`, le code back-end est dans `FrisbeeDashJS/*.js`.
 La description des webservices du serveur d'authentification se trouve dans auth_server/swagger_auth_server.yaml, généré avec http://editor.swagger.io/#!/.
 Vous pouvez lire les commentaires dans le code pour avoir plus de détails sur son fonctionnement.
 

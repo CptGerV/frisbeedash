@@ -1,7 +1,4 @@
 "use strict";
-/**
- * Created by kevin on 09/01/2017.
- */
 const collide = require('box-collide');
 const request = require('request');
 const util = require('util');
