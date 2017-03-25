@@ -8,6 +8,7 @@ Ici les technologies utilisées sont essentiellement basé sur JavaScript et ses
 Pour jouer, l'utilisateur a le choix entre entre rejoindre le matchmaking ou affronter l'inteligence artificiel au travers du client.
 
 # Requirements
+
 * nodejs
 * nodemon
 # FrisbeeDashJs:
@@ -36,7 +37,7 @@ npm install --save express socket.io body-parser helmet socketio-jwt box-collide
 npm install --save express body-parser morgan mongoose bcrypt shortid jsonwebtoken
 ```
 
-# Installation
+# Installation & Usage
 
 ```bash
 git clone https://github.com/CptGerV/frisbeedash.git
@@ -44,18 +45,18 @@ nodemon auth_server/server.js
 nodemon frisbeedash/app.js
 ```
 
-# Usage
-# Mise en production
+# Configuration
+
 Les serveurs sont configurés pour fonctionner en local.
 Pour changer l'adresse IP:
 ```bash
 sed -i "s@auth_server = "localhost@auth_server = "ip_du_serveur_authentification@g" FrisbeeDashJS/app.js FrisbeeDashJS/Room.js FrisbeeDashJS/javascripts/game.js
 sed -i "s@game_server = "localhost@game_server = "ip_du_serveur_de_jeu@g" FrisbeeDashJS/javascripts/game.js FrisbeeDashJS/javascripts/game_helper.js
 ```
+
 # Contributing
 
-1. Pull it
-2. Create your feature branch (`git checkout -b features/my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin features/my-new-feature`)
-5. If you're confident, merge your changes into master.
+1. Créez votre branche de fonctionnalité (git checkout -b features/my-new-feature)
+2. Validez vos modifications (git commit -am 'Ajouter une fonctionnalité')
+3. Poussez vers la branche (git push origine features/my-new-feature)
+4. Si vous êtes confiant, fusionnez vos modifications avec la branche master.
