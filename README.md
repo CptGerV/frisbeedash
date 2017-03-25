@@ -58,5 +58,5 @@ sed -i "s@game_server = "localhost@game_server = "ip_du_serveur_de_jeu@g" Frisbe
 
 1. Créez votre branche de fonctionnalité (git checkout -b features/my-new-feature)
 2. Validez vos modifications (git commit -am 'Ajouter une fonctionnalité')
-3. Poussez vers la branche (git push origine features/my-new-feature)
+3. Poussez vers la branche (git push origin features/my-new-feature)
 4. Si vous êtes confiant, fusionnez vos modifications avec la branche master.
