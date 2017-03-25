@@ -4,7 +4,6 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
-// var cors = require('cors');
 var shortid = require('shortid');
 var assert = require('assert');
 var jwt = require('jsonwebtoken');
@@ -12,125 +11,10 @@ var config = require('./config');
 var User = require('./app/models/user');
 var Friend = require('./app/models/friend');
 
-// Configuring Passport
-/*
- var passport = require('passport');
- var expressSession = require('express-session');
- app.use(expressSession({secret: config.secret}));
- app.use(passport.initialize());
- app.use(passport.session());
-
- passport.serializeUser(function(user, done) {
- done(null, user._id);
- });
-
- passport.deserializeUser(function(id, done) {
- User.findById(id, function(err, user) {
- done(err, user);
- });
- });
-
- // passport/login.js
- passport.use('login', new LocalStrategy({
- passReqToCallback: true
- },
- function(req, username, password, done) {
- User.findOne({ 'name' : username },
- function(err, user) {
- if(err) return done(err);
- if(!user) {
- console.log('User not found with username ' + username);
- return done(null, false, req.flash('message', 'User not found.'));
- }
-
- if(!isValidPassword(user, password)) {
- console.log('Invalid password !');
- return done(null, false, req.flash('message', 'Invalid Password'));
- }
- return done(null, user);
- })
- }));
-
- var isValidPassword = function(user, password){
- return bCrypt.compareSync(password, user.password);
- };
-
- passport.use('signup', new LocalStrategy({
- passReqToCallback : true
- },
- function(req, username, password, done) {
- findOrCreateUser = function(){
- // find a user in Mongo with provided username
- User.findOne({'username':username},function(err, user) {
- // In case of any error return
- if (err){
- console.log('Error in SignUp: '+err);
- return done(err);
- }
- // already exists
- if (user) {
- console.log('User already exists');
- return done(null, false,
- req.flash('message','User Already Exists'));
- } else {
- // if there is no user with that email
- // create the user
- var newUser = new User();
- // set the user's local credentials
- newUser.username = username;
- newUser.password = createHash(password);
- newUser.email = req.param('email');
- newUser.firstName = req.param('firstName');
- newUser.lastName = req.param('lastName');
-
- // save the user
- newUser.save(function(err) {
- if (err){
- console.log('Error in Saving user: '+err);
- throw err;
- }
- console.log('User Registration succesful');
- return done(null, newUser);
- });
- }
- });
- };
-
- // Delay the execution of findOrCreateUser and execute
- // the method in the next tick of the event loop
- process.nextTick(findOrCreateUser);
- })
- );
-
- // Generates hash using bCrypt
- var createHash = function(password){
- return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
- };
-
- app.post('/login', function(req, res, next) {
- passport.authenticate('local', function(err, user, info) {
- if (err) { return next(err); }
- if (!user) {
- res.redirect('/');
- }
- res.json({success: true, token: });
- })(req, res, next);
- });
-
- app.post('/signup', passport.authenticate('signup'), function(req, res) {
- res.json();
- });
-
- app.get('/signout', passport.authenticate('signout'), function(req, res) {
- req.logout();
- res.redirect('/');
- });
- */
 // =============
 // Configuration
 // =============
 mongoose.Promise = require('bluebird');
-//mongoose.Promise = global.Promise;
 const saltRounds = 10;
 var port = process.env.PORT || 8081;
 mongoose.connect(config.database);
@@ -139,7 +23,6 @@ app.set('superSecret', config.secret);
 // use body parser so we can get info from POST and/or URL parameters
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-// app.use(cors);
 
 // use morgan to log requests to the console
 app.use(morgan('dev'));
@@ -157,7 +40,7 @@ app.get('/', function (req, res) {
     res.send('Hello! The API is a http://localhost:' + port + '/api');
 });
 
-/*app.get('/setup', function (req, res) {
+app.get('/setup', function (req, res) {
     console.log('Setup');
 
     bcrypt.hash('adminadmin', saltRounds, function (err, hash) {
@@ -177,70 +60,8 @@ app.get('/', function (req, res) {
         });
     });
 
-    /*
-    bcrypt.hash('changeme', saltRounds, function (err, hash) {
-        // create a sample user
-        var nick = new User({
-            name: 'test1',
-            password: hash,
-            admin: true
-        });
-
-        // save the sample user
-        var promise = nick.save();
-        promise.then(function (err) {
-            console.log('Add ' + 'test1');
-            if (err) throw err;
-            console.log('User ' + 'test1' + 'saved successfully');
-        });
-    });
-
-    bcrypt.hash('changeme', saltRounds, function (err, hash) {
-        // create a sample user
-        var nick = new User({
-            name: 'test2',
-            password: hash,
-            admin: true
-        });
-
-        // save the sample user
-        var promise = nick.save();
-        promise.then(function (err) {
-            console.log('Add ' + 'test2');
-            if (err) throw err;
-            console.log('User ' + 'test2' + 'saved successfully');
-        });
-    });
-
-
-    var friend = new Friend({
-        user_id: 'test1',
-        friend_id: 'test2'
-    });
-
-    var promise = friend.save();
-    promise.then(function (err) {
-        console.log('Add friend');
-        if (err) throw err;
-        console.log('User saved successfully');
-    });
-
-    friend = new Friend({
-        user_id: 'test2',
-        friend_id: 'test1'
-    });
-
-    var promise = friend.save();
-    // assert.equal(promise.exec().constructor, Promise);
-    assert.ok(promise instanceof require('mpromise'));
-    promise.then(function (err) {
-        console.log('Add friend');
-        if (err) throw err;
-        console.log('User saved successfully');
-    });*/
-/*
     res.json({success: true});
-});*/
+});
 
 // ====================
 // API ROUTES ---------
