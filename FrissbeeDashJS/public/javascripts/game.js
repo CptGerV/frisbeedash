@@ -147,7 +147,7 @@ game = new Phaser.Game(properties.width, properties.height, Phaser.AUTO, '', {
 });
 
 function preload() {
-    game.load.baseURL = 'http://192.168.1.11:8080/assets/';
+    game.load.baseURL = 'http://localhost:8080/assets/';
     game.load.crossOrigin = 'anonymous';
 
     game.load.image('field', 'field.png');
@@ -1049,7 +1049,7 @@ function logout() {
     if (gameStarted) {
         socket.emit('concede');
     }
-    $.post('http://192.168.1.11:8081/api/logout',
+    $.post('http://localhost:8081/api/logout',
         {
             token: token
         },
@@ -1076,7 +1076,7 @@ function showMenu() {
 }
 function delAccount() {
     $.ajax({
-        url: 'http://192.168.1.11:8081/api/signout' + '?' + $.param({'token': token}),
+        url: 'http://localhost:8081/api/signout' + '?' + $.param({'token': token}),
         type: 'DELETE',
         crossDomain: true,
         success: function (data) {

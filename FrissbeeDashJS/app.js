@@ -31,7 +31,7 @@ function init() {
     // Connection to authentication server as admin
     request.post(
         {
-            url: 'http://192.168.1.11:8081/api/login', // localhost doesn't work
+            url: 'http://localhost:8081/api/login', // localhost doesn't work
             form: {
                 username: 'admin',
                 password: 'adminadmin',
@@ -78,7 +78,7 @@ function onSocketConnection(client) {
     sockets.push(client);
     request.post(
         {
-            url: 'http://192.168.1.11:8081/connect', // localhost doesn't work
+            url: 'http://localhost:8081/connect', // localhost doesn't work
             form: {
                 name: client.decoded_token.name,
                 online: true,
@@ -136,7 +136,7 @@ function onClientDisconnect() {
 
     request.post(
         {
-            url: 'http://192.168.1.11:8081/connect', // localhost doesn't work
+            url: 'http://localhost:8081/connect', // localhost doesn't work
             form: {
                 name: this.decoded_token.name,
                 online: false,
