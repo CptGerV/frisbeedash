@@ -1,11 +1,17 @@
 # FrisbeeDash
 
 FrisbeeDash est un jeu web de type “windjammer-like” où le joueur peut se déplacer, attraper et renvoyer un frisbee à son adversaire de plusieurs manières.
-Le but du jeu étant de marquer un maximum de points en envoyant le frisbee dans les cages adverses et ainsi remporter la partie.
-Ce projet propose de rassembler l’application de divers technologies web essentiellement basé sur le JavaScript.
-Ici est proposé un serveur de jeu et un serveur d'authentification,celui-ci permettant d'avoir accès aux services du serveur de jeu.
-Ici les technologies utilisées sont essentiellement basé sur JavaScript et ses framework.
-Pour jouer, l'utilisateur a le choix entre entre rejoindre le matchmaking ou affronter l'inteligence artificiel au travers du client.
+Le but du jeu est de marquer un maximum de points en envoyant le frisbee dans les cages adverses et ainsi remporter la partie.
+Ce projet propose de rassembler l’application de divers technologies web, essentiellements basées sur le JavaScript.
+Un serveur de jeu et un serveur d'authentification sont à disposition, ce dernier permettant d'obtenir un token donnant accès aux services du serveur de jeu.
+Les technologies utilisées sont essentiellement basées sur JavaScript et ses framework.
+Pour jouer, l'utilisateur a le choix entre entre rejoindre le matchmaking ou affronter l'inteligence artificiel après s'être identifier au travers du client.
+
+# Développement
+
+Le code front-end se trouve dans FrisbeeDashJS/public/, le code back-end est dans FrisbeeDashJS/*.js.
+La description des webservices du serveur d'authentification se trouve dans auth_server/swagger_auth_server.yaml, généré avec http://editor.swagger.io/#!/.
+Vous pouvez lire les commentaires dans le code pour avoir plus de détails sur son fonctionnement.
 
 # Requirements
 
@@ -23,7 +29,8 @@ Pour jouer, l'utilisateur a le choix entre entre rejoindre le matchmaking ou aff
 * mongoose
 * request
 ```bash
-npm install --save express socket.io body-parser helmet socketio-jwt box-collide shortid mongoose request
+cd frisbeedash
+npm install
 ```
 # Serveur authentification
 * express
@@ -34,7 +41,8 @@ npm install --save express socket.io body-parser helmet socketio-jwt box-collide
 * shortid
 * jsonwebtoken
 ```bash
-npm install --save express body-parser morgan mongoose bcrypt shortid jsonwebtoken
+cd auth_server
+npm install
 ```
 
 # Installation & Usage

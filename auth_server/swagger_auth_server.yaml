@@ -1,0 +1,392 @@
+swagger: '2.0'
+info:
+  version: "1.0.0"
+  title: Authentication server API
+  description: |
+    API du serveur d'authentification à l'application FrisbeeDash.
+    
+produces:
+  - application/json
+paths:
+  /signup:
+    post:
+      description: |
+        TODO
+      parameters:
+        -
+          name: name
+          in: query
+          description: User name
+          required: true
+          type: string
+          format: string
+        -
+          name: password
+          in: query
+          description: password's user.
+          required: true
+          type: string
+          format: password
+        -
+          name: mail
+          in: query
+          description: mail's user.
+          required: true
+          type: string
+          format: string
+      responses:
+        200:
+          description: Acount is created.
+          schema:
+            title: success
+            type: boolean
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /login:
+  # must be get
+    post:
+      tags:
+        - Authentication
+      description: Get a token id
+      parameters:
+        -
+          name: name
+          in: query
+          description: User name
+          required: true
+          type: string
+          format: string
+        -
+          name: password
+          in: query
+          description: password's user.
+          required: true
+          type: string
+          format: password
+      responses:
+        200:
+          description: Return a token id.
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              token:
+                type: string
+        401:
+          description: Return a failure's description.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: |
+            TODO
+  /logout:
+    post:
+      description: Makes the token invalid.
+      parameters:
+        - 
+          name: token
+          in: query
+          description: Example
+          required: true
+          type: string
+          format: string
+      responses:
+        200:
+          description: |
+            Description TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+        default:
+          description: |
+            TODO
+  /change_password:
+    post:
+      description: Change user's password.
+      parameters:
+        - 
+          name: password
+          in: query
+          description: New password
+          required: true
+          type: string
+          format: string
+        - 
+          name: token
+          in: query
+          description: Example
+          required: true
+          type: string
+          format: string
+      responses:
+        200:
+          description: |
+            Description TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              msg:
+                type: string
+        default:
+          description: |
+            TODO
+  /friend/request:
+    post:
+      description: Send a friend's request between two user.
+      parameters:
+        - 
+          name: requestname
+          in: query
+          description: User name requested.
+          required: true
+          type: string
+          format: string
+        - 
+          name: token
+          in: query
+          description: User's token requester.
+          required: true
+          type: string
+          format: string
+      responses:
+        200:
+          description: |
+            Description TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+        401:
+          description: |
+            Description TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              msg:
+                type: string
+        default:
+          description: |
+            TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              msg:
+                type: string
+  /friend/accept:
+    post:
+      description: Accept a friend's request.
+      parameters:
+        - 
+          name: requestname
+          in: query
+          description: User's name requester.
+          required: true
+          type: string
+          format: string
+        - 
+          name: token
+          in: query
+          description: User's token requested.
+          required: true
+          type: string
+          format: string
+      responses:
+        200:
+          description: |
+            Description TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+        401:
+          description: |
+            Description TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              msg:
+                type: string
+        default:
+          description: |
+            TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              msg:
+                type: string
+  /friend/refuse:
+    post:
+      description: Refuse a friendship request.
+      parameters:
+        - 
+          name: requestname
+          in: query
+          description: User's name requester.
+          required: true
+          type: string
+          format: string
+        - 
+          name: token
+          in: query
+          description: User's token requested.
+          required: true
+          type: string
+          format: string
+      responses:
+        200:
+          description: |
+            Description TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+        401:
+          description: |
+            Description TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              msg:
+                type: string
+        default:
+          description: |
+            TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              msg:
+                type: string
+  /friend/remove:
+    post:
+      description: Remove friendship between two user.
+      parameters:
+        - 
+          name: requestname
+          in: query
+          description: User's name to remove.
+          required: true
+          type: string
+          format: string
+        - 
+          name: token
+          in: query
+          description: User's token requester.
+          required: true
+          type: string
+          format: string
+      responses:
+        200:
+          description: |
+            Description TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+        401:
+          description: |
+            Description TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              msg:
+                type: string
+        default:
+          description: |
+            TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              msg:
+                type: string
+  /friend/list:
+    post:
+      description: Returns a user friend's list.
+      parameters:
+        - 
+          name: token
+          in: query
+          description: User's token requester.
+          required: true
+          type: string
+          format: string
+      responses:
+        200:
+          description: |
+            Description TODO
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              schema:
+                $ref: '#/definitions/Friends'
+        default:
+          description: |
+            TODO
+  
+# Admin routes
+  /connect:
+    post:
+      description: Change user status.
+      parameters:
+        - 
+          name: exemple
+          in: query
+          description: Example
+          required: true
+          type: string
+          format: string
+      responses:
+        200:
+          description: Respond success.
+        default:
+          description: |
+            TODO
+definitions:
+  Friends:
+    type: array
+    items:
+      properties:
+        name:
+          type: string
+        confirm:
+          type: boolean
+        online:
+          type: boolean
+        points:
+          type: number
+          format: int32
+  Error:
+    type: object
+    properties:
+      success:
+        type: boolean
+      msg:
+        type: string
