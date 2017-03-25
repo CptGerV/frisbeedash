@@ -5,8 +5,10 @@ var morgan = require('morgan');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var shortid = require('shortid');
-var assert = require('assert');
 var jwt = require('jsonwebtoken');
+
+var assert = require('assert');
+
 var config = require('./config');
 var User = require('./app/models/user');
 var Friend = require('./app/models/friend');
