@@ -410,15 +410,15 @@ function create() {
     btn_leave.x = game.world.width - btn_leave.width;
     btn_leave.visible = false;
 
-    text_info = game.add.bitmapText(game.world.centerX, btn_play_ia.y + btn_play_ia.height + 30, 'carrier_command', '', 32);
+    text_info = game.add.bitmapText(game.world.centerX, btn_play_ia.y + btn_play_ia.height + 30, 'carrier_command', '', 32 * resize_ratio_x);
 
-    let style = {font: 48 + "px Arial", fill: "#ffffff", align: "center"};
+    let style = {font: (48*resize_ratio_x) + "px Arial", fill: "#ffffff", align: "center"};
     text_pseudo_right = game.add.text(0, game.world.height * (1 / 32), '', style);
     text_pseudo_right.scale.set(resize_ratio_x, resize_ratio_y);
     text_pseudo_left = game.add.text(0, game.world.height * (1 / 32), '', style);
     text_pseudo_left.scale.set(resize_ratio_x, resize_ratio_y);
 
-    style.font = 24 + "px Arial";
+    style.font = (24*resize_ratio_x) + "px Arial";
     text_ping = game.add.text(5, 5, '', style);
     text_ping.scale.set(resize_ratio_x, resize_ratio_y);
 
@@ -788,7 +788,6 @@ function onEndGame(data) {
     text_info.visible = true;
     // Center text info
     text_info.x = game.world.centerX - text_info.width / 2;
-    text_info.bringToTop();
     text_setScores.visible = false;
 
     btn_join.visible = true;
