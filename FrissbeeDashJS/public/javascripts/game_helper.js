@@ -315,8 +315,9 @@ function get_friend_list() {
                         let element = $("<li class=\"list-group-item user_box\" id='list_item_" + friend.name + "'></li>");
                         let input_group = $("<div class=\"input-group\" id=\"input-group-" + friend.name + "\"></div>");
                         let indicator = $("<div id=\"online-indicator\"></div>");
-                        if (!friend.online)
+                        if (!friend.online) {
                             indicator.css("background-color", "red");
+                        }
                         input_group.append(indicator);
                         input_group.append("<div id='friend_id'>" + friend.name + " </div>");
 
@@ -364,21 +365,23 @@ function get_friend_list() {
                             input_group_btn.append(refuse_btn);
 
                         } else {
-                            $("<button type=\"button\" class=\"btn btn-default glyphicon glyphicon-comment\" id='" + friend.name + "'></button>")
-                                .appendTo(input_group_btn)
-                                .click(function () {
-                                    $('#chat_window_1').show();
-                                    let friend_id = $('#chat_window_1').find('.panel-title');
-                                    friend_id.text(friend.name);
-                                    $("#container-msg").empty();
-                                    console.log("friend.name: " + friend.name);
-                                    socket.emit('chat history', friend.name);
-                                });
-                            $("<button type=\"button\" class=\"btn btn-default glyphicon glyphicon-tower\" id='" + friend.name + "'></button>")
-                                .appendTo(input_group_btn)
-                                .click(function () {
-                                    socket.emit('duel request', {pseudo: event.target.id});
-                                });
+                            if (friend.online) {
+                                $("<button type=\"button\" class=\"btn btn-default glyphicon glyphicon-comment\" id='" + friend.name + "'></button>")
+                                    .appendTo(input_group_btn)
+                                    .click(function () {
+                                        $('#chat_window_1').show();
+                                        let friend_id = $('#chat_window_1').find('.panel-title');
+                                        friend_id.text(friend.name);
+                                        $("#container-msg").empty();
+                                        console.log("friend.name: " + friend.name);
+                                        socket.emit('chat history', friend.name);
+                                    });
+                                $("<button type=\"button\" class=\"btn btn-default glyphicon glyphicon-tower\" id='" + friend.name + "'></button>")
+                                    .appendTo(input_group_btn)
+                                    .click(function () {
+                                        socket.emit('duel request', {pseudo: event.target.id});
+                                    });
+                            }
                             $("<button type=\"button\" class=\"btn btn-default glyphicon glyphicon glyphicon-remove\" id='" + friend.name + "'></button>")
                                 .appendTo(input_group_btn)
                                 .click(function () {
