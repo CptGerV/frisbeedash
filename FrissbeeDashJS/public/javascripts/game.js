@@ -410,7 +410,7 @@ function create() {
     btn_leave.x = game.world.width - btn_leave.width;
     btn_leave.visible = false;
 
-    text_info = game.add.bitmapText(game.world.centerX, btn_play_ia.y + btn_play_ia.height + 30, 'carrier_command', '', 32 * resize_ratio_x);
+    text_info = game.add.bitmapText(game.world.centerX, btn_join.y - btn_join.height - 30, 'carrier_command', '', 32 * resize_ratio_x);
 
     let style = {font: (48*resize_ratio_x) + "px Arial", fill: "#ffffff", align: "center"};
     text_pseudo_right = game.add.text(0, game.world.height * (1 / 32), '', style);
@@ -825,8 +825,6 @@ function onPerfectThrow(data) {
     sprite_pick.animations.play('pick_effect_anim');
 }
 function onUpdate(data_u) {
-    // data : { players: [{id, x, y}], disc: [{x, y, z}] }
-    // console.log(data.players[0]);
     let players = data_u.players;
     let discs = data_u.disc;
     let ratio_x = (field_border_right - field_marge_left) / 640;
@@ -912,7 +910,6 @@ function onDuelRequest(pseudo) {
 function onUpdateTchat(data) {
     for(let i = 0; i < data.length; i++) {
         let msg = data[i];
-
         let element = $('<div class="row msg_container base_sent"></div>');
 
         if(msg.sendBy == $("#pseudo").val()) {

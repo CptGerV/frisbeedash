@@ -153,8 +153,16 @@ apiRoutes.post('/login', function (req, res) {
                         expiresIn: "2h"
                     });
                     user.token = token;
-                    user.save();
-                    res.json({success: true, token: user.token})
+                    User.findOneAndUpdate({name: req.body.username}, {$set: {token: token}}, {new: true},
+                        function (err, user) {
+                            if(user) {
+                                res.json({success: true, token: user.token});
+                            }
+                            else {
+                                res.json({success: false, msg: 'User didnt found'});
+                            }
+                        });
+                    // user.save();
                 } else {
                     console.log("Error during compare password.")
                     res.status(401).json({success: false, msg: "Error during compare password."});
@@ -203,7 +211,8 @@ apiRoutes.use(function (req, res, next) {
                         if (user.token == token) {
                             next();
                         } else {
-                            res.status(401).json({success: false, msg: "Wrong token"});
+                            console.log('Invalid token.');
+                            res.status(401).json({success: false, msg: "Invald token"});
                         }
                     }
                 }).then(function (error) {
@@ -480,9 +489,9 @@ app.use('/api', apiRoutes);
 
 app.post('/connect', function (req, res) {
     console.log('connect');
-    //if(!req.admin) {
-     //   return res.status(401).json({success: false, msg: "Only for administrator"});
-    //}
+    if(!req.admin) {
+        return res.status(401).json({success: false, msg: "Only for administrator"});
+    }
     var promise = User.findOneAndUpdate({name: req.body.name}, {$set: {online: req.body.online}}, {new: true}).exec();
     promise.then(function (user) {
         if (user) {
