@@ -23,11 +23,13 @@ function Player(startX, startY, game, side, scale_x, scale_y) {
         s_shadow_left.anchor.set(0.5, 0.5);
         s_shadow_left.alpha = 0.1;
         s_shadow_left.scale.set(resize_ratio_x / 1.5, resize_ratio_y / 1.3);
+        s_shadow_left.visible = false;
         let s_shadow_right = this.trail_right.create(this.x, this.y, 'character');
         s_shadow_right.frame = this.side == "left" ? 21: 16;
         s_shadow_right.anchor.set(0.5, 0.5);
         s_shadow_right.alpha = 0.1;
         s_shadow_right.scale.set(resize_ratio_x / 1.5, resize_ratio_y / 1.3);
+        s_shadow_right.visible = false;
     }
 
     let sprite = game.add.sprite(this.x, this.y, 'character');

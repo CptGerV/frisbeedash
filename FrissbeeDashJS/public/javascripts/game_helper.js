@@ -38,7 +38,7 @@ function onJSLoad() {
                 },
                 function (data) {
                     if (data.success) {
-                        alert(data.msg);
+                        console.log(data.msg);
                     } else {
                         get_friend_list();
                     }
@@ -299,6 +299,16 @@ function get_friend_list() {
                         $(this).remove();
                 });
 
+                let hide = true;
+                $(".user_box").each(function(){
+                    if($(this).is(":hidden")) {
+                        hide = true;
+                    }
+                    else {
+                        hide = false;
+                    }
+                });
+
                 data.friends.forEach(function (friend) {
                     let s = $('#friends_list').find('#list_item_' + friend.name);
                     if(s.length == 0) {
@@ -313,7 +323,7 @@ function get_friend_list() {
                         let input_group_btn = $("<div class=\"input-group-btn\"></div>");
 
                         if (!friend.confirm) {
-                            input_group_btn.append("<button type=\"button\" class=\"btn btn-default glyphicon glyphicon glyphicon-ok\" id='" + friend.name + "'></button>")
+                            let confirm_btn = $("<button type=\"button\" class=\"btn btn-default glyphicon glyphicon glyphicon-ok\" id='" + friend.name + "'></button>")
                                 .click(function () {
                                     $.post(
                                         'http://' + auth_server + ':8081/api/friend/accept',
@@ -331,24 +341,28 @@ function get_friend_list() {
                                         'json'
                                     );
                                 });
-                            input_group_btn.append("<button type=\"button\" class=\"btn btn-default glyphicon glyphicon glyphicon-remove warning\" id='" + friend.name + "'></button>")
+                            input_group_btn.append(confirm_btn);
+
+                            let refuse_btn = $("<button type=\"button\" class=\"btn btn-default glyphicon glyphicon glyphicon-remove warning\" id='" + friend.name + "'></button>")
                                 .click(function () {
-                                    $.post(
-                                        'http://' + auth_server + ':8081/api/friend/refuse',
-                                        {
-                                            token: token,
-                                            requestname: event.target.id
-                                        },
-                                        function (data) {
-                                            if (!data.success) {
-                                                alert(data.msg);
-                                            } else {
-                                                get_friend_list();
-                                            }
-                                        },
-                                        'json'
-                                    );
-                                });
+                                $.post(
+                                    'http://' + auth_server + ':8081/api/friend/refuse',
+                                    {
+                                        token: token,
+                                        requestname: event.target.id
+                                    },
+                                    function (data) {
+                                        if (!data.success) {
+                                            alert(data.msg);
+                                        } else {
+                                            get_friend_list();
+                                        }
+                                    },
+                                    'json'
+                                );
+                            });
+                            input_group_btn.append(refuse_btn);
+
                         } else {
                             $("<button type=\"button\" class=\"btn btn-default glyphicon glyphicon-comment\" id='" + friend.name + "'></button>")
                                 .appendTo(input_group_btn)
@@ -398,6 +412,9 @@ function get_friend_list() {
                         element.append(input_group);
                         if (friend.online === 'true')
                             element.css("background-color", "red");
+                        if(hide) {
+                            element.hide();
+                        }
                         $("#friends_list").append(element);
                     } else {
                         if (!friend.online)

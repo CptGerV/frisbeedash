@@ -195,7 +195,7 @@ apiRoutes.use(function (req, res, next) {
                     if (!user)
                         res.json({success: false, msg: "User didn't found"});
                     else {
-                        console.log(user)
+                        // console.log(user)
                         console.log("user.admin: " + user.admin)
                         if (user.admin)
                             req.admin = true;
@@ -233,11 +233,32 @@ apiRoutes.delete('/signout', function (req, res) {
         if (err) throw err;
         if (user) {
             console.log('User successfully deleted!');
-            res.json({success: true, message: 'User successfully deleted!'});
+            //res.json({success: true, message: 'User successfully deleted!'});
         } else {
-            res.json({success: false, message: "User does not found"});
+            //res.json({success: false, message: "User does not found"});
         }
     });
+
+    Friend.findOneAndRemove({user_id: req.decoded.name}, function (err, user) {
+        if (err) throw err;
+        if (user) {
+            console.log('User successfully deleted!');
+            //res.json({success: true, message: 'User successfully deleted!'});
+        } else {
+            //res.json({success: false, message: "User does not found"});
+        }
+    });
+
+    Friend.findOneAndRemove({friend_id: req.decoded.name}, function (err, user) {
+        if (err) throw err;
+        if (user) {
+            console.log('User successfully deleted!');
+            //res.json({success: true, message: 'User successfully deleted!'});
+        } else {
+            //res.json({success: false, message: "User does not found"});
+        }
+    });
+    res.json({success: true, message: 'User successfully deleted!'});
 });
 
 apiRoutes.post('/logout', function (req, res) {
@@ -370,11 +391,12 @@ apiRoutes.post('/friend/list', function (req, res) {
                 User.findOne({name: friendship.friend_id})
                     .exec()
                     .then(function (user) {
-                        // console.log(user);
-                        for (var i = 0; i < friends.length; i++) {
-                            if (friends[i].name == user.name) {
-                                friends[i].points = user.points;
-                                friends[i].online = user.online;
+                        if(user) {
+                            for (var i = 0; i < friends.length; i++) {
+                                if (friends[i].name == user.name) {
+                                    friends[i].points = user.points;
+                                    friends[i].online = user.online;
+                                }
                             }
                         }
                         return friends;

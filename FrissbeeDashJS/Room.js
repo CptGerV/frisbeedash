@@ -5,6 +5,8 @@ const util = require('util');
 const Disc = require('./Disc.js');
 const Player = require('./Player.js');
 
+var auth_server = "localhost";
+
 const gameProperties = {
     screenWidth: 640,
     screenHeight: 360,
@@ -130,10 +132,10 @@ Room.prototype.addUser = function (user) {
  * Remove the user with pseudo from the room.
  * @param pseudo - User's pseudo
  */
-Room.prototype.removeUser = function (pseudo) {
+Room.prototype.removeUser = function (socket) {
     if(this.started) {
         for (let i = 0; i < this.players_room.length; i++) {
-            if(this.players_room[i].id != pseudo) {
+            if(this.players_room[i].id != socket.pseudo) {
                 // Send end game signal with player_id winner
                 this.endGame(this.players_room[i].id);
             }
@@ -141,12 +143,12 @@ Room.prototype.removeUser = function (pseudo) {
     } else {
         for (let i = 0; i < this.players_room.length; i++) {
             const player = this.players_room[i];
-            if (player.id == pseudo) {
+            if (player.id == socket.pseudo) {
                 this.players_room.splice(i, 1);
             }
         }
 
-        for (let i = 0; i < this.socket_users.length; i++) if (this.socket_users[i].pseudo == pseudo) {
+        for (let i = 0; i < this.socket_users.length; i++) if (this.socket_users[i].pseudo == socket.pseudo) {
             this.socket_users[i].emit('end game', '');
             delete this.socket_users.splice(i, 1);
         }

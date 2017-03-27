@@ -58,6 +58,14 @@ function setEventHandlers() {
             timeout: 15000 // 15 seconds to send the authentication message
         })).on('authenticated', function(socket) {
         //this socket is authenticated, we are good to handle more events from it.
+
+        for(let i = 0; i < sockets.length; i++) {
+            let s = sockets[i];
+            if(s.pseudo == socket.decoded_token.name) {
+                console.log('User already connected');
+                return;
+            }
+        }
         console.log('hello! ' + socket.decoded_token.name);
         onSocketConnection(socket);
     });
@@ -151,7 +159,7 @@ function onClientDisconnect() {
         });
 
     if (typeof (this.id_game) != 'undefined') {
-        currentGames[this.id_game].removeUser(this);
+        currentGames[this.id_game].removeUser(this); // TODO verifier si on a besoin de la socket et pas juste du pseudo ?
     }
 }
 function onNewPlayer(data) {
@@ -221,7 +229,7 @@ function onNewPlayer(data) {
 function onConcede() {
     util.log('Player has concede: ' + this.id);
     if (typeof (this.id_game) != 'undefined') {
-        currentGames[this.id_game].removeUser(this.pseudo);
+        currentGames[this.id_game].removeUser(this);
     }
 }
 // Player has moved
