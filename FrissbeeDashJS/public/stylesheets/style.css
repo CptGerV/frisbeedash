@@ -193,4 +193,7 @@ data-msg-required{
 #help_modal{
     background: url("../assets/helping.png") no-repeat;
     background-size: cover;
+    background-color: rgba(255,255,255,0.3);
+    border: inset 12px rgba(255,255,255,0.3);
 }
+
