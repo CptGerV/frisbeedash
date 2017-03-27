@@ -281,7 +281,7 @@ Player.prototype.specialBlow = function () {
         this.disc.sens.y = -1;
     }
 
-    if (this.side == 'left') {
+    if (this.side == "left") {
         this.disc.setX(this.x + (this.width / 2) + this.disc.radius + 10);
         this.disc.sens.x = 1;
         this.disc.setVelX(8);
@@ -290,11 +290,6 @@ Player.prototype.specialBlow = function () {
         this.disc.sens.x = -1;
         this.disc.setVelX(-8);
     }
-
-    this.disc.setVelX(8);
-    this.disc.setVelY(0);
-
-    // console.log("special blow: target x: " + this.disc.target.x + " y: " + this.disc.target.y + " sens x: " + this.disc.sens.x + " y: " + this.disc.sens.y);
 
     this.disc.start();
     this.disc = null;

@@ -63,12 +63,18 @@ Player.prototype.setPos = function (newPos) {
             if(new Date().getTime() < this.dashing) {
                 this.trail_right.visible = true;
                 this.trail_left.visible = false;
+            } else {
+                this.trail_right.visible = false;
+                this.trail_left.visible = false;
             }
         } else if(newPos.x < this.x) {
             this.sprites.animations.play('runLeft');
             if(new Date().getTime() < this.dashing) {
                 this.trail_right.visible = false;
                 this.trail_left.visible = true;
+            } else {
+                this.trail_right.visible = false;
+                this.trail_left.visible = false;
             }
         } else {
             if(this.side == 'right') {
@@ -76,12 +82,18 @@ Player.prototype.setPos = function (newPos) {
                 if(new Date().getTime() < this.dashing) {
                     this.trail_right.visible = false;
                     this.trail_left.visible = true;
+                } else {
+                    this.trail_right.visible = false;
+                    this.trail_left.visible = false;
                 }
             }
             else {
                 this.sprites.animations.play('runRight');
                 if(new Date().getTime() < this.dashing) {
                     this.trail_right.visible = true;
+                    this.trail_left.visible = false;
+                } else {
+                    this.trail_right.visible = false;
                     this.trail_left.visible = false;
                 }
             }
@@ -138,7 +150,7 @@ Player.prototype.throw = function() {
 };
 
 Player.prototype.dash = function() {
-    this.dashing = new Date().getTime() + 100;
+    this.dashing = new Date().getTime() + 150;
 };
 
 function throwComplete() {

@@ -568,8 +568,6 @@ function joinGame() {
     const pseudo = document.getElementById('pseudo').value;
     socket.emit("new player", {ia: false, pseudo: pseudo});
     searchingGame = true;
-    //menu actualisation
-    showMenu();
 }
 function playVsIA() {
     const pseudo = document.getElementById('pseudo').value;
@@ -790,6 +788,7 @@ function onEndGame(data) {
     text_info.visible = true;
     // Center text info
     text_info.x = game.world.centerX - text_info.width / 2;
+    text_info.bringToTop();
     text_setScores.visible = false;
 
     btn_join.visible = true;

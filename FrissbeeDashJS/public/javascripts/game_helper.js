@@ -113,7 +113,7 @@ function refreshFriendlist() {
     setTimeout(function () {
         get_friend_list();
         refreshFriendlist();
-    }, 10000);
+    }, 5000);
 }
 function connectToServer() {
     socket = io('http://'+ game_server + ':8080', {transports: ['websocket']});

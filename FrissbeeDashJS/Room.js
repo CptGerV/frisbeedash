@@ -231,7 +231,7 @@ Room.prototype.update = function () {
                         // If IA hold the disc
                         if (Math.random() * 100 > 60)
                             newCmd.cmd = Math.floor((Math.random() * 3) - 1);
-
+                        newCmd.cmd = 2;
                         let move_cmd = Math.floor((Math.random() * 3));
                         if (move_cmd == 0) {
                             newCmd.up = true;
