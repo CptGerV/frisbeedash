@@ -480,8 +480,11 @@ function getCookie(cname) {
 function helpingMode(){
     $("#btn_ooh").width(btn_help.width);
     $("#btn_ooh").height(btn_help.height);
-    $("#help_modal").width(game.world.width);
-    $("#help_modal").height(game.world.height);
+    $("#help_modal").width(game.world.width*0.8);
+    $("#help_modal").height(game.world.height*0.8);
+    $("#help_modal").css("position","absolute");
+    $("#help_modal").css("top", ( $(window).height() - $("#help_modal").height() ) / 2  + "px");
+    $("#help_modal").css("left", ( $(window).width() - $("#help_modal").width() ) / 2 + "px");
     $("#help_modal").modal("toggle");
 }
 
